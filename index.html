@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Forge Barber Co. — Precision Cuts, Ojodu</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* ---- Design tokens ----
+     charcoal = base/background shades
+     gold     = accent (buttons, highlights, prices)
+     steel    = muted text (secondary copy)
+     ivory    = main text on dark background
+  */
+  :root{
+    --charcoal-950:#14120F;
+    --charcoal-900:#1B1815;
+    --charcoal-800:#211E1A;
+    --charcoal-700:#2E2A24;
+    --charcoal-600:#3A352E;
+    --steel-400:#8B8578;
+    --steel-300:#A9A296;
+    --gold-500:#C9A227;
+    --gold-400:#D9B948;
+    --gold-300:#E8C766;
+    --ivory:#F2EEE3;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--charcoal-950);
+    color:var(--ivory);
+    font-family:'Inter',sans-serif;
+  }
+  /* utility classes for the three fonts we're using */
+  .font-display{font-family:'Oswald',sans-serif;} /* headings — bold, condensed, industrial */
+  .font-mono{font-family:'JetBrains Mono',monospace;} /* prices, labels, timestamps */
+
+  /* underline animation for nav links on hover */
+  .nav-link{ position:relative; }
+  .nav-link::after{
+    content:''; position:absolute; left:0; bottom:-4px; width:0; height:1px; background:var(--gold-400);
+    transition:width .25s ease;
+  }
+  .nav-link:hover::after{ width:100%; }
+
+  /* glow lift effect for buttons/cards on hover */
+  .glow-hover{ transition:box-shadow .3s ease, transform .3s ease; }
+  .glow-hover:hover{
+    box-shadow:0 0 0 1px rgba(201,162,39,0.5), 0 0 24px rgba(201,162,39,0.25);
+    transform:translateY(-2px);
+  }
+
+  a:focus-visible, button:focus-visible{
+    outline:2px solid var(--gold-300); outline-offset:3px;
+  }
+
+  /* soft gold glow behind the hero content */
+  .hero-glow{
+    background:
+      radial-gradient(ellipse 60% 50% at 50% 0%, rgba(201,162,39,0.16), transparent 60%),
+      radial-gradient(ellipse 40% 40% at 85% 20%, rgba(201,162,39,0.08), transparent 60%);
+  }
+
+  /* fade-and-rise animation, triggered by JS when a section scrolls into view */
+  .reveal{ opacity:0; transform:translateY(18px); transition:opacity .7s ease, transform .7s ease; }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+
+  .price-row{ border-bottom:1px dashed var(--charcoal-600); }
+  .price-row:last-child{ border-bottom:none; }
+  /* in a 2-column grid, the "last row" is the final 2 items, not just 1 —
+     nth-last-child(-n+2) selects the last 2 children regardless of total count */
+  .price-row:nth-last-child(-n+2){ border-bottom:none; }
+
+  /* Ticker: a wide flex row that scrolls left forever.
+     The trick: the content is duplicated once, and we animate exactly -50%
+     (the width of one copy) so the loop is seamless. */
+  .ticker-track{
+    display:flex; width:max-content;
+    animation:ticker 28s linear infinite;
+  }
+  @keyframes ticker{
+    from{ transform:translateX(0); }
+    to{ transform:translateX(-50%); }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .reveal{ opacity:1; transform:none; transition:none; }
+    .ticker-track{ animation:none; }
+  }
+
+  /* Slideshow: all slides stack on top of each other (position:absolute),
+     JS toggles which one has opacity:1 every few seconds. */
+  .slide{
+    position:absolute; inset:0;
+    opacity:0;
+    transition:opacity 1s ease;
+  }
+  .slide.active{ opacity:1; }
+
+  .slide-dot{
+    width:6px; height:6px; border-radius:999px;
+    background:var(--charcoal-600);
+    transition:background .3s ease, width .3s ease;
+  }
+  .slide-dot.active{ background:var(--gold-400); width:18px; }
+
+  /* glowing divider line used between the label and the price list */
+  .forge-line{
+    height:2px; width:100%;
+    background:linear-gradient(90deg, transparent, var(--gold-500) 20%, var(--gold-300) 50%, var(--gold-500) 80%, transparent);
+    box-shadow:0 0 8px 0 rgba(201,162,39,0.4);
+  }
+
+  /* Service rows become clickable */
+  .service-row{ cursor:pointer; transition:background .2s ease; }
+  .service-row:hover{ background:rgba(201,162,39,0.05); }
+
+  /* Modal: overlay (dark backdrop) + panel (the actual popup box).
+     Hidden by default via opacity/pointer-events, toggled by JS adding .open. */
+  #modalOverlay{
+    position:fixed; inset:0; z-index:50;
+    background:rgba(0,0,0,0.7);
+    opacity:0; pointer-events:none;
+    transition:opacity .25s ease;
+    display:flex; align-items:center; justify-content:center;
+    padding:1.25rem;
+  }
+  #modalOverlay.open{ opacity:1; pointer-events:auto; }
+
+  #modalPanel{
+    transform:translateY(12px); opacity:0;
+    transition:transform .25s ease, opacity .25s ease;
+  }
+  #modalOverlay.open #modalPanel{ transform:translateY(0); opacity:1; }
+</style>
+</head>
+<body class="antialiased">
+
+<!-- NAV -->
+<header class="fixed top-0 inset-x-0 z-40 backdrop-blur-md bg-[var(--charcoal-950)]/80 border-b border-[var(--charcoal-700)]">
+  <div class="max-w-6xl mx-auto px-5 sm:px-8 h-16 flex items-center justify-between">
+    <a href="#top" class="font-display text-lg tracking-wide">
+      FORGE <span class="text-[var(--gold-400)]">BARBER CO.</span>
+    </a>
+    <nav class="hidden md:flex items-center gap-8 text-sm text-[var(--steel-300)] font-medium">
+      <a href="#services" class="nav-link hover:text-[var(--ivory)]">Services</a>
+      <a href="#gallery" class="nav-link hover:text-[var(--ivory)]">Gallery</a>
+      <a href="#book" class="nav-link hover:text-[var(--ivory)]">Book</a>
+    </nav>
+    <a href="#book" class="hidden sm:inline-flex items-center gap-2 bg-[var(--gold-500)] text-[var(--charcoal-950)] font-semibold text-sm px-4 py-2 rounded-sm glow-hover">
+      Book a chair
+    </a>
+    <button id="menuBtn" aria-label="Open menu" aria-expanded="false" class="md:hidden text-[var(--ivory)]">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16M4 12h16M4 17h16" stroke-linecap="round"/></svg>
+    </button>
+  </div>
+  <div id="mobileMenu" class="hidden md:hidden border-t border-[var(--charcoal-700)] bg-[var(--charcoal-950)] px-5 py-4 space-y-3 text-sm">
+    <a href="#services" class="block text-[var(--steel-300)]">Services</a>
+    <a href="#gallery" class="block text-[var(--steel-300)]">Gallery</a>
+    <a href="#book" class="block bg-[var(--gold-500)] text-[var(--charcoal-950)] font-semibold text-center px-4 py-2 rounded-sm mt-2">Book a chair</a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section id="top" class="hero-glow pt-40 pb-24 px-5 sm:px-8 border-b border-[var(--charcoal-700)]">
+  <div class="max-w-6xl mx-auto grid md:grid-cols-[1.1fr_1fr] gap-12 items-center">
+    <div class="reveal">
+      <p class="font-mono text-xs tracking-[0.25em] text-[var(--gold-400)] uppercase mb-5">Ojodu, Lagos — Est. 2021</p>
+      <h1 class="font-display text-[13vw] sm:text-6xl md:text-7xl leading-[0.95] uppercase tracking-tight">
+        Precision,<br>
+        <span class="text-[var(--gold-400)]">forged</span> by hand.
+      </h1>
+      <p class="mt-6 text-[var(--steel-300)] text-base sm:text-lg max-w-md leading-relaxed">
+        No shortcuts, no rush jobs. Every fade, line-up and shave is worked like a craft — because that's exactly what it is.
+      </p>
+      <div class="mt-8 flex flex-wrap gap-4">
+        <a href="#book" class="bg-[var(--gold-500)] text-[var(--charcoal-950)] font-semibold px-6 py-3 rounded-sm glow-hover">Book your slot</a>
+        <a href="#services" class="border border-[var(--charcoal-600)] text-[var(--ivory)] px-6 py-3 rounded-sm hover:border-[var(--gold-500)] transition-colors">See the menu</a>
+      </div>
+    </div>
+
+    <!-- IMAGE SLIDESHOW PLACEHOLDER: each .slide is a stand-in for a future <img>.
+         To use real photos: inside each .slide div, replace the icon/text with
+         <img src="photo1.jpg" class="w-full h-full object-cover" alt="..."> -->
+    <div class="reveal aspect-[4/5] rounded-sm border border-[var(--charcoal-700)] relative overflow-hidden">
+      <div class="slide active bg-gradient-to-br from-[var(--charcoal-800)] to-[var(--charcoal-900)] flex flex-col items-center justify-center gap-3 text-center px-6">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--gold-400)" stroke-width="1.4"><path d="M6 3l12 18M18 3L6 21"/></svg>
+        <p class="font-mono text-xs text-[var(--steel-400)] uppercase tracking-widest">Slide 1 — Skin Fade</p>
+      </div>
+      <div class="slide bg-gradient-to-br from-[var(--charcoal-700)] to-[var(--charcoal-900)] flex flex-col items-center justify-center gap-3 text-center px-6">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--gold-400)" stroke-width="1.4"><path d="M4 12c4-6 12-6 16 0M4 12c4 6 12 6 16 0"/></svg>
+        <p class="font-mono text-xs text-[var(--steel-400)] uppercase tracking-widest">Slide 2 — Beard Sculpt</p>
+      </div>
+      <div class="slide bg-gradient-to-br from-[var(--charcoal-800)] to-[var(--charcoal-700)] flex flex-col items-center justify-center gap-3 text-center px-6">
+        <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="var(--gold-400)" stroke-width="1.4"><circle cx="12" cy="12" r="8"/><path d="M12 4v4M12 16v4"/></svg>
+        <p class="font-mono text-xs text-[var(--steel-400)] uppercase tracking-widest">Slide 3 — Hot Towel Shave</p>
+      </div>
+      <p class="absolute bottom-10 inset-x-0 text-center text-xs text-[var(--steel-400)] px-6">Replace each slide with a real &lt;img&gt; when photos are ready</p>
+      <!-- dots showing which slide is active -->
+      <div id="slideDots" class="absolute bottom-4 inset-x-0 flex justify-center gap-2"></div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER: scrolling strip of services, purely decorative -->
+<div class="border-b border-[var(--charcoal-700)] bg-[var(--charcoal-900)] py-3 overflow-hidden">
+  <div class="ticker-track font-display text-sm uppercase tracking-[0.3em] text-[var(--steel-400)]">
+    <!-- Set 1 -->
+    <span class="mx-6">Signature Cuts</span><span class="text-[var(--gold-500)]">✦</span>
+    <span class="mx-6">Skin Fades</span><span class="text-[var(--gold-500)]">✦</span>
+    <span class="mx-6">Beard Sculpting</span><span class="text-[var(--gold-500)]">✦</span>
+    <span class="mx-6">Hot Towel Shaves</span><span class="text-[var(--gold-500)]">✦</span>
+    <span class="mx-6">Grey Blending</span><span class="text-[var(--gold-500)]">✦</span>
+    <span class="mx-6">Kids Cuts</span><span class="text-[var(--gold-500)]">✦</span>
+    <!-- Set 2 (identical copy — required so the -50% loop has no visible seam) -->
+    <span class="mx-6">Signature Cuts</span><span class="text-[var(--gold-500)]">✦</span>
+    <span class="mx-6">Skin Fades</span><span class="text-[var(--gold-500)]">✦</span>
+    <span class="mx-6">Beard Sculpting</span><span class="text-[var(--gold-500)]">✦</span>
+    <span class="mx-6">Hot Towel Shaves</span><span class="text-[var(--gold-500)]">✦</span>
+    <span class="mx-6">Grey Blending</span><span class="text-[var(--gold-500)]">✦</span>
+    <span class="mx-6">Kids Cuts</span><span class="text-[var(--gold-500)]">✦</span>
+  </div>
+</div>
+
+<!-- SERVICES & PRICING -->
+<section id="services" class="px-5 sm:px-8 py-24 max-w-6xl mx-auto">
+  <div class="reveal mb-10">
+    <p class="font-mono text-xs tracking-[0.25em] text-[var(--gold-400)] uppercase mb-3">The Menu</p>
+    <h2 class="font-display text-4xl sm:text-5xl uppercase">What we work on</h2>
+  </div>
+  <div class="forge-line mb-8 reveal"></div>
+
+  <!-- Each row: name + short description on the left, price on the right.
+       .price-row gives the dashed divider between rows (defined in <style> above). -->
+  <!-- Each row is a button so it's clickable/keyboard-accessible.
+       data-* attributes carry the info the modal needs — JS reads these on click. -->
+  <div class="grid md:grid-cols-2 gap-x-16 reveal">
+    <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-5"
+      data-name="Signature Cut" data-price="₦8,000"
+      data-desc="Wash, cut, and style — tailored to your face shape and how you actually wear your hair."
+      data-detail="Includes a consultation, wash, precision cut with clippers and shears, and a style finish. Takes about 30–40 minutes. Best if you come in with a rough idea of length and style, even a reference photo.">
+      <div>
+        <p class="font-display uppercase tracking-wide">Signature Cut</p>
+        <p class="text-sm text-[var(--steel-300)] mt-1">Wash, cut, and style — tailored to your face shape and how you actually wear your hair.</p>
+      </div>
+      <span class="font-mono text-[var(--gold-300)] whitespace-nowrap">₦8,000</span>
+    </button>
+
+    <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-5"
+      data-name="Skin Fade" data-price="₦9,500"
+      data-desc="A clean, blended taper down to the skin — low, mid, or high, your call."
+      data-detail="Clipper work down to the skin with a razor-clean blend, no visible lines between lengths. Tell us low, mid, or high fade when you book, or we'll recommend one based on your hair. About 40 minutes.">
+      <div>
+        <p class="font-display uppercase tracking-wide">Skin Fade</p>
+        <p class="text-sm text-[var(--steel-300)] mt-1">A clean, blended taper down to the skin — low, mid, or high, your call.</p>
+      </div>
+      <span class="font-mono text-[var(--gold-300)] whitespace-nowrap">₦9,500</span>
+    </button>
+
+    <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-5"
+      data-name="Beard Sculpt" data-price="₦5,000"
+      data-desc="Shape-up and line definition, finished with beard oil."
+      data-detail="Beard trimmed and shaped to your jawline, sharp lines on the cheek and neck, finished with beard oil to soften and set it. About 20 minutes. Works well paired with any cut.">
+      <div>
+        <p class="font-display uppercase tracking-wide">Beard Sculpt</p>
+        <p class="text-sm text-[var(--steel-300)] mt-1">Shape-up and line definition, finished with beard oil.</p>
+      </div>
+      <span class="font-mono text-[var(--gold-300)] whitespace-nowrap">₦5,000</span>
+    </button>
+
+    <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-5"
+      data-name="Hot Towel Shave" data-price="₦6,500"
+      data-desc="Straight-razor shave with a hot towel wrap to open the pores first."
+      data-detail="A traditional straight-razor shave. We start with a hot towel wrap to soften the skin and open the pores, then shave with the grain for a close, irritation-free finish. About 30 minutes.">
+      <div>
+        <p class="font-display uppercase tracking-wide">Hot Towel Shave</p>
+        <p class="text-sm text-[var(--steel-300)] mt-1">Straight-razor shave with a hot towel wrap to open the pores first.</p>
+      </div>
+      <span class="font-mono text-[var(--gold-300)] whitespace-nowrap">₦6,500</span>
+    </button>
+
+    <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-5"
+      data-name="Grey Blending" data-price="₦10,000"
+      data-desc="Softens grey without a flat, dyed look — blended in gradually."
+      data-detail="A gradual color blend that softens grey rather than covering it outright — keeps a natural look instead of a flat, obviously-dyed result. Best maintained every 3–4 weeks. About 45 minutes.">
+      <div>
+        <p class="font-display uppercase tracking-wide">Grey Blending</p>
+        <p class="text-sm text-[var(--steel-300)] mt-1">Softens grey without a flat, dyed look — blended in gradually.</p>
+      </div>
+      <span class="font-mono text-[var(--gold-300)] whitespace-nowrap">₦10,000</span>
+    </button>
+
+    <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-5"
+      data-name="Kids Cut (under 12)" data-price="₦5,500"
+      data-desc="Same precision, a calmer pace — for our younger clients."
+      data-detail="A full cut for kids under 12, same precision as an adult cut but at a calmer, more patient pace. Parents are welcome to stay in the chair area. About 20–25 minutes.">
+      <div>
+        <p class="font-display uppercase tracking-wide">Kids Cut (under 12)</p>
+        <p class="text-sm text-[var(--steel-300)] mt-1">Same precision, a calmer pace — for our younger clients.</p>
+      </div>
+      <span class="font-mono text-[var(--gold-300)] whitespace-nowrap">₦5,500</span>
+    </button>
+
+    <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-5"
+      data-name="Cut + Beard Combo" data-price="₦12,000"
+      data-desc="Signature cut and beard sculpt together, at a bundled rate."
+      data-detail="Our Signature Cut and Beard Sculpt done back to back in one sitting, at a lower combined rate than booking them separately. About 50 minutes total.">
+      <div>
+        <p class="font-display uppercase tracking-wide">Cut + Beard Combo</p>
+        <p class="text-sm text-[var(--steel-300)] mt-1">Signature cut and beard sculpt together, at a bundled rate.</p>
+      </div>
+      <span class="font-mono text-[var(--gold-300)] whitespace-nowrap">₦12,000</span>
+    </button>
+
+    <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-5"
+      data-name="The Full Forge" data-price="₦16,000"
+      data-desc="Cut, beard, hot towel shave and wash — the complete session."
+      data-detail="The full experience: signature cut, beard sculpt, hot towel straight-razor shave, and a wash to finish. Built for when you want to properly reset, not just touch up. About 75–90 minutes.">
+      <div>
+        <p class="font-display uppercase tracking-wide">The Full Forge</p>
+        <p class="text-sm text-[var(--steel-300)] mt-1">Cut, beard, hot towel shave and wash — the complete session.</p>
+      </div>
+      <span class="font-mono text-[var(--gold-300)] whitespace-nowrap">₦16,000</span>
+    </button>
+  </div>
+</section>
+
+<!-- GALLERY -->
+<section id="gallery" class="px-5 sm:px-8 py-24 max-w-6xl mx-auto border-t border-[var(--charcoal-700)]">
+  <div class="reveal mb-10">
+    <p class="font-mono text-xs tracking-[0.25em] text-[var(--gold-400)] uppercase mb-3">Recent Work</p>
+    <h2 class="font-display text-4xl sm:text-5xl uppercase">From the chair</h2>
+  </div>
+
+  <!-- GALLERY PLACEHOLDERS: each .gallery-item is a stand-in for a real photo.
+       To use real photos: replace the <svg>+<p> inside a card with
+       <img src="photo.jpg" class="w-full h-full object-cover" alt="..."> and
+       drop the icon/label, keeping the outer card classes. -->
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-3 reveal">
+    <div class="aspect-square rounded-sm border border-[var(--charcoal-700)] bg-gradient-to-br from-[var(--charcoal-800)] to-[var(--charcoal-900)] flex flex-col items-center justify-center gap-2 glow-hover">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--gold-400)" stroke-width="1.5"><path d="M6 3l12 18M18 3L6 21"/></svg>
+      <span class="font-mono text-[10px] text-[var(--steel-400)] uppercase tracking-wider">Skin Fade</span>
+    </div>
+    <div class="aspect-square rounded-sm border border-[var(--charcoal-700)] bg-gradient-to-br from-[var(--charcoal-800)] to-[var(--charcoal-900)] flex flex-col items-center justify-center gap-2 glow-hover">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--gold-400)" stroke-width="1.5"><path d="M4 12c4-6 12-6 16 0M4 12c4 6 12 6 16 0"/></svg>
+      <span class="font-mono text-[10px] text-[var(--steel-400)] uppercase tracking-wider">Beard Sculpt</span>
+    </div>
+    <div class="aspect-square rounded-sm border border-[var(--charcoal-700)] bg-gradient-to-br from-[var(--charcoal-800)] to-[var(--charcoal-900)] flex flex-col items-center justify-center gap-2 glow-hover">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--gold-400)" stroke-width="1.5"><circle cx="12" cy="12" r="8"/><path d="M12 4v4M12 16v4"/></svg>
+      <span class="font-mono text-[10px] text-[var(--steel-400)] uppercase tracking-wider">Hot Towel</span>
+    </div>
+    <div class="aspect-square rounded-sm border border-[var(--charcoal-700)] bg-gradient-to-br from-[var(--charcoal-800)] to-[var(--charcoal-900)] flex flex-col items-center justify-center gap-2 glow-hover">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--gold-400)" stroke-width="1.5"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+      <span class="font-mono text-[10px] text-[var(--steel-400)] uppercase tracking-wider">Line-up</span>
+    </div>
+  </div>
+  <p class="mt-4 text-xs text-[var(--steel-400)] reveal">Replace each card above with a real photo when shots are ready — same card size, just swap the content.</p>
+</section>
+<div id="modalOverlay">
+  <div id="modalPanel" class="w-full max-w-md bg-[var(--charcoal-900)] border border-[var(--charcoal-700)] rounded-sm p-6 relative">
+    <button id="modalClose" aria-label="Close" class="absolute top-4 right-4 text-[var(--steel-400)] hover:text-[var(--ivory)]">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 6l12 12M18 6L6 18" stroke-linecap="round"/></svg>
+    </button>
+
+    <p id="modalName" class="font-display text-2xl uppercase pr-8"></p>
+    <p id="modalPrice" class="font-mono text-[var(--gold-300)] mt-1"></p>
+    <p id="modalDetail" class="text-sm text-[var(--steel-300)] mt-4 leading-relaxed"></p>
+
+    <div class="forge-line my-5"></div>
+
+    <!-- ACCOUNT NUMBER: replace with your real bank details -->
+    <p class="font-mono text-xs text-[var(--gold-400)] uppercase tracking-widest mb-2">Pay by transfer</p>
+    <div class="text-sm space-y-1 mb-6">
+      <p><span class="text-[var(--steel-400)]">Bank:</span> [Your Bank Name]</p>
+      <p><span class="text-[var(--steel-400)]">Account name:</span> Forge Barber Co.</p>
+      <p><span class="text-[var(--steel-400)]">Account number:</span> <span class="font-mono">0000000000</span></p>
+    </div>
+
+    <!-- WHATSAPP LINK: replace 2340000000000 with the real number (country code, no + or leading 0) -->
+    <a id="modalWhatsapp" href="#" target="_blank" rel="noopener"
+      class="flex items-center justify-center gap-2 bg-[var(--gold-500)] text-[var(--charcoal-950)] font-semibold py-3 rounded-sm glow-hover">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 00-8.6 15L2 22l5.2-1.4A10 10 0 1012 2zm5.8 14.2c-.2.6-1.4 1.2-2 1.3-.5.1-1.1.1-1.8-.1-.4-.1-1-.3-1.7-.6-3-1.3-5-4.3-5.1-4.5-.2-.2-1.2-1.6-1.2-3.1s.8-2.2 1.1-2.5c.3-.3.6-.3.8-.3h.6c.2 0 .4 0 .6.5.2.5.7 1.8.8 1.9.1.1.1.3 0 .5-.1.2-.1.3-.3.5l-.4.5c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.5 1.5.3.1.5.1.6-.1l.7-.8c.2-.3.4-.2.7-.1l1.6.8c.2.1.4.2.5.3.1.2.1.9-.1 1.5z"/></svg>
+      Continue booking on WhatsApp
+    </a>
+  </div>
+</div>
+
+<!-- Sections will go here, one at a time -->
+<p class="pb-10 px-10 font-display text-2xl text-[var(--gold-400)]">More sections coming...</p>
+
+<script>
+  const menuBtn = document.getElementById('menuBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  menuBtn.addEventListener('click', () => {
+    const isHidden = mobileMenu.classList.toggle('hidden');
+    menuBtn.setAttribute('aria-expanded', String(!isHidden));
+  });
+  mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.add('hidden')));
+
+  // Watches each .reveal element; when it scrolls into view, adds the "in" class
+  // which triggers the fade-and-rise transition defined in CSS above.
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // --- Hero slideshow ---
+  const slides = document.querySelectorAll('.slide');
+  const dotsWrap = document.getElementById('slideDots');
+  let current = 0;
+
+  // build one dot per slide, and let clicking a dot jump straight to that slide
+  slides.forEach((_, i) => {
+    const dot = document.createElement('button');
+    dot.className = 'slide-dot' + (i === 0 ? ' active' : '');
+    dot.setAttribute('aria-label', `Show slide ${i + 1}`);
+    dot.addEventListener('click', () => goToSlide(i));
+    dotsWrap.appendChild(dot);
+  });
+  const dots = dotsWrap.querySelectorAll('.slide-dot');
+
+  function goToSlide(index) {
+    slides[current].classList.remove('active');
+    dots[current].classList.remove('active');
+    current = index;
+    slides[current].classList.add('active');
+    dots[current].classList.add('active');
+  }
+
+  // auto-advance every 4 seconds, looping back to slide 0 after the last one
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!prefersReducedMotion && slides.length > 1) {
+    setInterval(() => goToSlide((current + 1) % slides.length), 4000);
+  }
+
+  // --- Service detail modal ---
+  const WHATSAPP_NUMBER = "234"; // real test number — 08108313381 in international format (234 + digits, no leading 0)
+
+  const overlay = document.getElementById('modalOverlay');
+  const modalName = document.getElementById('modalName');
+  const modalPrice = document.getElementById('modalPrice');
+  const modalDetail = document.getElementById('modalDetail');
+  const modalWhatsapp = document.getElementById('modalWhatsapp');
+
+  function openModal(row) {
+    const { name, price, detail } = row.dataset;
+    modalName.textContent = name;
+    modalPrice.textContent = price;
+    modalDetail.textContent = detail;
+
+    // Pre-fill the WhatsApp message with the service name and price so the
+    // conversation starts with context instead of a blank "hi".
+    const message = `Hi Forge Barber Co., I'd like to book: ${name} (${price}).`;
+    modalWhatsapp.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
+
+    overlay.classList.add('open');
+    document.body.style.overflow = 'hidden'; // stop background scroll while modal is open
+  }
+
+  function closeModal() {
+    overlay.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll('.service-row').forEach(row => {
+    row.addEventListener('click', () => openModal(row));
+  });
+  document.getElementById('modalClose').addEventListener('click', closeModal);
+  overlay.addEventListener('click', (e) => { if (e.target === overlay) closeModal(); }); // click backdrop to close
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+</script>
+</body>
+</html>
