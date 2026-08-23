@@ -34,11 +34,9 @@
     color:var(--ivory);
     font-family:'Inter',sans-serif;
   }
-  /* utility classes for the three fonts we're using */
-  .font-display{font-family:'Oswald',sans-serif;} /* headings — bold, condensed, industrial */
-  .font-mono{font-family:'JetBrains Mono',monospace;} /* prices, labels, timestamps */
+  .font-display{font-family:'Oswald',sans-serif;}
+  .font-mono{font-family:'JetBrains Mono',monospace;}
 
-  /* underline animation for nav links on hover */
   .nav-link{ position:relative; }
   .nav-link::after{
     content:''; position:absolute; left:0; bottom:-4px; width:0; height:1px; background:var(--gold-400);
@@ -46,7 +44,6 @@
   }
   .nav-link:hover::after{ width:100%; }
 
-  /* glow lift effect for buttons/cards on hover */
   .glow-hover{ transition:box-shadow .3s ease, transform .3s ease; }
   .glow-hover:hover{
     box-shadow:0 0 0 1px rgba(201,162,39,0.5), 0 0 24px rgba(201,162,39,0.25);
@@ -57,25 +54,18 @@
     outline:2px solid var(--gold-300); outline-offset:3px;
   }
 
-  /* soft gold glow behind the hero content */
   .hero-glow{
     background:
       radial-gradient(ellipse 60% 50% at 50% 0%, rgba(201,162,39,0.16), transparent 60%),
       radial-gradient(ellipse 40% 40% at 85% 20%, rgba(201,162,39,0.08), transparent 60%);
   }
 
-  /* fade-and-rise animation, triggered by JS when a section scrolls into view */
   .reveal{ opacity:0; transform:translateY(18px); transition:opacity .7s ease, transform .7s ease; }
   .reveal.in{ opacity:1; transform:translateY(0); }
 
   .price-row{ border-bottom:1px dashed var(--charcoal-600); }
-  /* in a 2-column grid, the "last row" is the final 2 items, not just 1 —
-     nth-last-child(-n+2) selects the last 2 children regardless of total count */
   .price-row:nth-last-child(-n+2){ border-bottom:none; }
 
-  /* Ticker: a wide flex row that scrolls left forever.
-     The trick: the content is duplicated once, and we animate exactly -50%
-     (the width of one copy) so the loop is seamless. */
   .ticker-track{
     display:flex; width:max-content;
     animation:ticker 28s linear infinite;
@@ -90,8 +80,6 @@
     .ticker-track{ animation:none; }
   }
 
-  /* Slideshow: all slides stack on top of each other (position:absolute),
-     JS toggles which one has opacity:1 every few seconds. */
   .slide{
     position:absolute; inset:0;
     opacity:0;
@@ -106,19 +94,15 @@
   }
   .slide-dot.active{ background:var(--gold-400); width:18px; }
 
-  /* glowing divider line used between the label and the price list */
   .forge-line{
     height:2px; width:100%;
     background:linear-gradient(90deg, transparent, var(--gold-500) 20%, var(--gold-300) 50%, var(--gold-500) 80%, transparent);
     box-shadow:0 0 8px 0 rgba(201,162,39,0.4);
   }
 
-  /* Service rows become clickable */
   .service-row{ cursor:pointer; transition:background .2s ease; }
   .service-row:hover{ background:rgba(201,162,39,0.05); }
 
-  /* Modal: overlay (dark backdrop) + panel (the actual popup box).
-     Hidden by default via opacity/pointer-events, toggled by JS adding .open. */
   #modalOverlay{
     position:fixed; inset:0; z-index:50;
     background:rgba(0,0,0,0.7);
@@ -166,7 +150,7 @@
 <section id="top" class="hero-glow pt-40 pb-24 px-5 sm:px-8 border-b border-[var(--charcoal-700)]">
   <div class="max-w-6xl mx-auto grid md:grid-cols-[1.1fr_1fr] gap-12 items-center">
     <div class="reveal">
-      <p class="font-mono text-xs tracking-[0.25em] text-[var(--gold-400)] uppercase mb-5">Mansfield Road, Nottingham Est. 2025</p>
+      <p class="font-mono text-xs tracking-[0.25em] text-[var(--gold-400)] uppercase mb-5">Mansfield Road, Nottingham — Est. 2025</p>
       <h1 class="font-display text-[13vw] sm:text-6xl md:text-7xl leading-[0.95] uppercase tracking-tight">
         Precision,<br>
         <span class="text-[var(--gold-400)]">forged</span> by hand.
@@ -201,14 +185,12 @@
 <!-- TICKER: scrolling strip of services, purely decorative -->
 <div class="border-b border-[var(--charcoal-700)] bg-[var(--charcoal-900)] py-3 overflow-hidden">
   <div class="ticker-track font-display text-sm uppercase tracking-[0.3em] text-[var(--steel-400)]">
-    <!-- Set 1 -->
     <span class="mx-6">Signature Cuts</span><span class="text-[var(--gold-500)]" aria-hidden="true">✦</span>
     <span class="mx-6">Skin Fades</span><span class="text-[var(--gold-500)]" aria-hidden="true">✦</span>
     <span class="mx-6">Beard Sculpting</span><span class="text-[var(--gold-500)]" aria-hidden="true">✦</span>
     <span class="mx-6">Hot Towel Shaves</span><span class="text-[var(--gold-500)]" aria-hidden="true">✦</span>
     <span class="mx-6">Grey Blending</span><span class="text-[var(--gold-500)]" aria-hidden="true">✦</span>
     <span class="mx-6">Kids Cuts</span><span class="text-[var(--gold-500)]" aria-hidden="true">✦</span>
-    <!-- Set 2 (identical copy — required so the -50% loop has no visible seam) -->
     <span class="mx-6">Signature Cuts</span><span class="text-[var(--gold-500)]" aria-hidden="true">✦</span>
     <span class="mx-6">Skin Fades</span><span class="text-[var(--gold-500)]" aria-hidden="true">✦</span>
     <span class="mx-6">Beard Sculpting</span><span class="text-[var(--gold-500)]" aria-hidden="true">✦</span>
@@ -226,14 +208,9 @@
   </div>
   <div class="forge-line mb-8 reveal"></div>
 
-  <!-- Each row: name + short description on the left, price on the right.
-       .price-row gives the dashed divider between rows (defined in <style> above). -->
-  <!-- Each row is a button so it's clickable/keyboard-accessible.
-       data-* attributes carry the info the modal needs — JS reads these on click. -->
   <div class="grid md:grid-cols-2 gap-x-16 reveal">
     <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-5"
       data-name="Signature Cut" data-price="₦8,000"
-      data-desc="Wash, cut, and style — tailored to your face shape and how you actually wear your hair."
       data-detail="Includes a consultation, wash, precision cut with clippers and shears, and a style finish. Takes about 30–40 minutes. Best if you come in with a rough idea of length and style, even a reference photo.">
       <div>
         <p class="font-display uppercase tracking-wide">Signature Cut</p>
@@ -244,7 +221,6 @@
 
     <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-5"
       data-name="Skin Fade" data-price="₦9,500"
-      data-desc="A clean, blended taper down to the skin — low, mid, or high, your call."
       data-detail="Clipper work down to the skin with a razor-clean blend, no visible lines between lengths. Tell us low, mid, or high fade when you book, or we'll recommend one based on your hair. About 40 minutes.">
       <div>
         <p class="font-display uppercase tracking-wide">Skin Fade</p>
@@ -255,7 +231,6 @@
 
     <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-5"
       data-name="Beard Sculpt" data-price="₦5,000"
-      data-desc="Shape-up and line definition, finished with beard oil."
       data-detail="Beard trimmed and shaped to your jawline, sharp lines on the cheek and neck, finished with beard oil to soften and set it. About 20 minutes. Works well paired with any cut.">
       <div>
         <p class="font-display uppercase tracking-wide">Beard Sculpt</p>
@@ -266,7 +241,6 @@
 
     <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-5"
       data-name="Hot Towel Shave" data-price="₦6,500"
-      data-desc="Straight-razor shave with a hot towel wrap to open the pores first."
       data-detail="A traditional straight-razor shave. We start with a hot towel wrap to soften the skin and open the pores, then shave with the grain for a close, irritation-free finish. About 30 minutes.">
       <div>
         <p class="font-display uppercase tracking-wide">Hot Towel Shave</p>
@@ -277,7 +251,6 @@
 
     <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-5"
       data-name="Grey Blending" data-price="₦10,000"
-      data-desc="Softens grey without a flat, dyed look — blended in gradually."
       data-detail="A gradual color blend that softens grey rather than covering it outright — keeps a natural look instead of a flat, obviously-dyed result. Best maintained every 3–4 weeks. About 45 minutes.">
       <div>
         <p class="font-display uppercase tracking-wide">Grey Blending</p>
@@ -288,7 +261,6 @@
 
     <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-5"
       data-name="Kids Cut (under 12)" data-price="₦5,500"
-      data-desc="Same precision, a calmer pace — for our younger clients."
       data-detail="A full cut for kids under 12, same precision as an adult cut but at a calmer, more patient pace. Parents are welcome to stay in the chair area. About 20–25 minutes.">
       <div>
         <p class="font-display uppercase tracking-wide">Kids Cut (under 12)</p>
@@ -299,7 +271,6 @@
 
     <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-5"
       data-name="Cut + Beard Combo" data-price="₦12,000"
-      data-desc="Signature cut and beard sculpt together, at a bundled rate."
       data-detail="Our Signature Cut and Beard Sculpt done back to back in one sitting, at a lower combined rate than booking them separately. About 50 minutes total.">
       <div>
         <p class="font-display uppercase tracking-wide">Cut + Beard Combo</p>
@@ -310,7 +281,6 @@
 
     <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-5"
       data-name="The Full Forge" data-price="₦16,000"
-      data-desc="Cut, beard, hot towel shave and wash — the complete session."
       data-detail="The full experience: signature cut, beard sculpt, hot towel straight-razor shave, and a wash to finish. Built for when you want to properly reset, not just touch up. About 75–90 minutes.">
       <div>
         <p class="font-display uppercase tracking-wide">The Full Forge</p>
@@ -328,8 +298,6 @@
     <h2 class="font-display text-4xl sm:text-5xl uppercase">From the chair</h2>
   </div>
 
-  <!-- GALLERY: each card holds one <img>. To use real photos later, just replace
-       the file at the same path (images/gallery/...) — no code changes needed. -->
   <div class="grid grid-cols-2 md:grid-cols-4 gap-3 reveal">
     <div class="aspect-square rounded-sm border border-[var(--charcoal-700)] overflow-hidden glow-hover">
       <img src="images/gallery/skin-fade.jpg" alt="Skin fade haircut example" class="w-full h-full object-cover">
@@ -346,6 +314,8 @@
   </div>
   <p class="mt-4 text-xs text-[var(--steel-400)] reveal">Photos here are placeholders — drop real shots into <code class="font-mono">images/gallery/</code> using the same filenames to swap them in.</p>
 </section>
+
+<!-- SERVICE DETAIL MODAL -->
 <div id="modalOverlay" role="dialog" aria-modal="true" aria-labelledby="modalName">
   <div id="modalPanel" class="w-full max-w-md bg-[var(--charcoal-900)] border border-[var(--charcoal-700)] rounded-sm p-6 relative">
     <button id="modalClose" aria-label="Close" class="absolute top-4 right-4 text-[var(--steel-400)] hover:text-[var(--ivory)]">
@@ -366,15 +336,15 @@
       <p><span class="text-[var(--steel-400)]">Account number:</span> <span class="font-mono">0000000000</span></p>
     </div>
 
-    <!-- WHATSAPP LINK: replace 2340000000000 with the real number (country code, no + or leading 0) -->
+    <!-- WHATSAPP LINK: fixed — clean, complete SVG path, no corrupted characters -->
     <a id="modalWhatsapp" href="#" target="_blank" rel="noopener"
       class="flex items-center justify-center gap-2 bg-[var(--gold-500)] text-[var(--charcoal-950)] font-semibold py-3 rounded-sm glow-hover">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 00-8.6 15L2 22l5.2-1.4A10 10 0 1012 2zm5.8 14.2c-.2.6-1.4 1.2-2 1.3-.5.1-1.1.1-1.8-.1-.4-.1-1-.3-1.7-.6-3-1.3-5-4.3-5.1-4.5-.2-.2-1.2-1.6-1.2-3.1s.8-2.2 1.1-2.5c.3-.3.6-.3.8-.3h.6c.2 0 .4 0 .6.5.2.5.7 1.8.8 1.9.1.1.1.3 0 .5-.1.2-.1.3-.3.5l-.4.5c-.1.1-.3.3-.1.6.
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 00-8.6 15L2 22l5.2-1.4A10 10 0 1012 2zm5.8 14.2c-.2.6-1.4 1.2-2 1.3-.5.1-1.1.1-1.8-.1-.4-.1-1-.3-1.7-.6-3-1.3-5-4.3-5.1-4.5-.2-.2-1.2-1.6-1.2-3.1s.8-2.2 1.1-2.5c.3-.3.6-.3.8-.3h.6c.2 0 .4 0 .6.5.2.5.7 1.8.8 1.9.1.1.1.3 0 .5-.1.2-.1.3-.3.5l-.4.5c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.5 1.5.3.1.5.1.6-.1l.7-.8c.2-.3.4-.2.7-.1l1.6.8c.2.1.4.2.5.3.1.2.1.9-.1 1.5z"/></svg>
       Continue booking on WhatsApp
     </a>
 
-    <!-- EMAIL LINK: replace book@forgebarberco.com with the real inbox -->
-    <a id="modalEmail" href="mailto:hairclinician@gmail.com"
+    <!-- EMAIL LINK -->
+    <a id="modalEmail" href="#"
       class="flex items-center justify-center gap-2 border border-[var(--charcoal-600)] text-[var(--ivory)] py-3 rounded-sm mt-3 hover:border-[var(--gold-500)] transition-colors">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
       Or book by email
@@ -385,17 +355,15 @@
 <!-- FOOTER -->
 <footer class="border-t border-[var(--charcoal-700)] px-5 sm:px-8 py-10">
   <div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-6">
-    <p class="font-mono text-xs text-[var(--steel-400)] uppercase tracking-wider">© 2026 Hair Clinician Co. Mansfield Road, Nottingham</p>
+    <p class="font-mono text-xs text-[var(--steel-400)] uppercase tracking-wider">© 2026 Hair Clinician Co. — Mansfield Road, Nottingham</p>
 
-    <!-- SOCIAL LINKS: swap the href values for your real profile URLs -->
     <div class="flex items-center gap-5">
       <a href="https://instagram.com/hairclinicianco" target="_blank" rel="noopener" aria-label="Instagram" class="text-[var(--steel-400)] hover:text-[var(--gold-400)] transition-colors">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
       </a>
       <a id="footerWhatsapp" href="#" target="_blank" rel="noopener" aria-label="WhatsApp" class="text-[var(--steel-400)] hover:text-[var(--gold-400)] transition-colors">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 00-8.6 15L2 22l5.2-1.4A10 10 0 1012 2zm5.8 14.2c-.2.6-1.4 1.2-2 1.3-.5.1-1.1.1-1.8-.1-.4-.1-1-.3-1.7-.6-3-1.3-5-4.3-5.1-4.5-.2-.2-1.2-1.6-1.2-3.1s.8-2.2 1.1-2.5c.3-.3.6-.3.8-.3h.6c.2 0 .4 0 .6.5.2.5.7 1.8.8 1.9.1.1.1.3 0 .5-.1.2-.1.3-.3.5l-.4.5c-.1.１ -.3 .3 -.１ .6 .２ .３ .８ １ .７ ２ .１ .１ .１ .3 ０ .5 -.１ .２ -.１ .3 -.３ .5l-.４ .5c-.１ .１ -.３ .3 -.１ .6 .2 .3 .8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.5 1.5.3.1.5.1.6-.1l.7-.8c.2-.3.4-.2.7-.1l1.6.8c.2.1.4.2.5.3.1.2.1.9-.1 1.5z"/></svg>
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 00-8.6 15L2 22l5.2-1.4A10 10 0 1012 2zm5.8 14.2c-.2.6-1.4 1.2-2 1.3-.5.1-1.1.1-1.8-.1-.4-.1-1-.3-1.7-.6-3-1.3-5-4.3-5.1-4.5-.2-.2-1.2-1.6-1.2-3.1s.8-2.2 1.1-2.5c.3-.3.6-.3.8-.3h.6c.2 0 .4 0 .6.5.2.5.7 1.8.8 1.9.1.1.1.3 0 .5-.1.2-.1.3-.3.5l-.4.5c-.1.1-.3.3-.1.6.2.3.8 1.3 1.7 2.1 1.2 1 2.1 1.4 2.5 1.5.3.1.5.1.6-.1l.7-.8c.2-.3.4-.2.7-.1l1.6.8c.2.1.4.2.5.3.1.2.1.9-.1 1.5z"/></svg>
       </a>
-      <!-- EMAIL: replace with the real inbox, same address as BOOKING_EMAIL in the script below -->
       <a href="mailto:hairclinician@gmail.com" aria-label="Email" class="text-[var(--steel-400)] hover:text-[var(--gold-400)] transition-colors">
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
       </a>
@@ -414,8 +382,6 @@
   });
   mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => mobileMenu.classList.add('hidden')));
 
-  // Watches each .reveal element; when it scrolls into view, adds the "in" class
-  // which triggers the fade-and-rise transition defined in CSS above.
   const io = new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
   }, { threshold: 0.15 });
@@ -426,7 +392,6 @@
   const dotsWrap = document.getElementById('slideDots');
   let current = 0;
 
-  // build one dot per slide, and let clicking a dot jump straight to that slide
   slides.forEach((_, i) => {
     const dot = document.createElement('button');
     dot.className = 'slide-dot' + (i === 0 ? ' active' : '');
@@ -444,16 +409,14 @@
     dots[current].classList.add('active');
   }
 
-  // auto-advance every 4 seconds, looping back to slide 0 after the last one
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (!prefersReducedMotion && slides.length > 1) {
     setInterval(() => goToSlide((current + 1) % slides.length), 4000);
   }
 
   // --- Service detail modal ---
-  const WHATSAPP_NUMBER = "+447349570305"; // real test number —  in international format ( + digits, no leading 0)
+  const WHATSAPP_NUMBER = "447349570305"; // UK number in international format — digits only, no + and no leading 0
 
-  // Footer WhatsApp icon uses the same number — set once here so there's only one place to update it
   document.getElementById('footerWhatsapp').href = `https://wa.me/${WHATSAPP_NUMBER}`;
 
   const overlay = document.getElementById('modalOverlay');
@@ -463,8 +426,8 @@
   const modalWhatsapp = document.getElementById('modalWhatsapp');
   const modalEmail = document.getElementById('modalEmail');
   const modalClose = document.getElementById('modalClose');
-  const BOOKING_EMAIL = "hairclinician@gmail.com"; // TODO: replace with the real inbox
-  let lastFocusedElement = null; // remembers which service row was clicked, to restore focus on close
+  const BOOKING_EMAIL = "hairclinician@gmail.com";
+  let lastFocusedElement = null;
 
   function openModal(row) {
     const { name, price, detail } = row.dataset;
@@ -472,33 +435,30 @@
     modalPrice.textContent = price;
     modalDetail.textContent = detail;
 
-    // Pre-fill the WhatsApp message with the service name and price so the
-    // conversation starts with context instead of a blank "hi".
     const message = `Hi Hair Clinician Co., I'd like to book: ${name} (${price}).`;
     modalWhatsapp.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
 
-    // mailto: link — subject and body are separate params, both need their own encoding
     const subject = `Booking request: ${name}`;
     const body = `Hi Hair Clinician Co.,\n\nI'd like to book: ${name} (${price}).\n\nPreferred day/time: `;
     modalEmail.href = `mailto:${BOOKING_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 
     lastFocusedElement = row;
     overlay.classList.add('open');
-    document.body.style.overflow = 'hidden'; // stop background scroll while modal is open
-    modalClose.focus(); // move keyboard focus into the modal so screen readers/keyboard users land inside it
+    document.body.style.overflow = 'hidden';
+    modalClose.focus();
   }
 
   function closeModal() {
     overlay.classList.remove('open');
     document.body.style.overflow = '';
-    if (lastFocusedElement) lastFocusedElement.focus(); // return focus to whichever service row opened the modal
+    if (lastFocusedElement) lastFocusedElement.focus();
   }
 
   document.querySelectorAll('.service-row').forEach(row => {
     row.addEventListener('click', () => openModal(row));
   });
   document.getElementById('modalClose').addEventListener('click', closeModal);
-  overlay.addEventListener('click', (e) => { if (e.target === overlay) closeModal(); }); // click backdrop to close
+  overlay.addEventListener('click', (e) => { if (e.target === overlay) closeModal(); });
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
 </script>
 </body>
