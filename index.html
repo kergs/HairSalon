@@ -202,92 +202,355 @@
 
 <!-- SERVICES & PRICING -->
 <section id="services" class="px-5 sm:px-8 py-24 max-w-6xl mx-auto">
-  <div class="reveal mb-10">
+  <div class="reveal mb-8">
     <p class="font-mono text-xs tracking-[0.25em] text-[var(--gold-400)] uppercase mb-3">The Menu</p>
     <h2 class="font-display text-4xl sm:text-5xl uppercase">What we work on</h2>
   </div>
-  <div class="forge-line mb-8 reveal"></div>
 
-  <div class="grid md:grid-cols-2 gap-x-16 reveal">
-    <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-5"
-      data-name="Signature Cut" data-price="₦8,000"
-      data-detail="Includes a consultation, wash, precision cut with clippers and shears, and a style finish. Takes about 30–40 minutes. Best if you come in with a rough idea of length and style, even a reference photo.">
-      <div>
-        <p class="font-display uppercase tracking-wide">Signature Cut</p>
-        <p class="text-sm text-[var(--steel-300)] mt-1">Wash, cut, and style — tailored to your face shape and how you actually wear your hair.</p>
-      </div>
-      <span class="font-mono text-[var(--gold-300)] whitespace-nowrap">₦8,000</span>
-    </button>
+  <!-- Category quick-nav — jumps to each section below, since the full menu is long -->
+  <div class="reveal flex gap-2 overflow-x-auto pb-4 mb-10 -mx-5 px-5 sm:mx-0 sm:px-0 sm:flex-wrap">
+    <a href="#cat-wash" class="font-mono text-xs uppercase tracking-wider text-[var(--steel-300)] border border-[var(--charcoal-600)] rounded-full px-3 py-1.5 hover:border-[var(--gold-500)] hover:text-[var(--ivory)] transition-colors whitespace-nowrap">Wash</a>
+    <a href="#cat-haircut" class="font-mono text-xs uppercase tracking-wider text-[var(--steel-300)] border border-[var(--charcoal-600)] rounded-full px-3 py-1.5 hover:border-[var(--gold-500)] hover:text-[var(--ivory)] transition-colors whitespace-nowrap">Haircut</a>
+    <a href="#cat-locs-adult" class="font-mono text-xs uppercase tracking-wider text-[var(--steel-300)] border border-[var(--charcoal-600)] rounded-full px-3 py-1.5 hover:border-[var(--gold-500)] hover:text-[var(--ivory)] transition-colors whitespace-nowrap">Locs — Adult</a>
+    <a href="#cat-locs-teens-13-17" class="font-mono text-xs uppercase tracking-wider text-[var(--steel-300)] border border-[var(--charcoal-600)] rounded-full px-3 py-1.5 hover:border-[var(--gold-500)] hover:text-[var(--ivory)] transition-colors whitespace-nowrap">Locs — Teens (13–17)</a>
+    <a href="#cat-locs-kids" class="font-mono text-xs uppercase tracking-wider text-[var(--steel-300)] border border-[var(--charcoal-600)] rounded-full px-3 py-1.5 hover:border-[var(--gold-500)] hover:text-[var(--ivory)] transition-colors whitespace-nowrap">Locs — Kids</a>
+    <a href="#cat-professional-removals" class="font-mono text-xs uppercase tracking-wider text-[var(--steel-300)] border border-[var(--charcoal-600)] rounded-full px-3 py-1.5 hover:border-[var(--gold-500)] hover:text-[var(--ivory)] transition-colors whitespace-nowrap">Professional Removals</a>
+    <a href="#cat-kinky-twists" class="font-mono text-xs uppercase tracking-wider text-[var(--steel-300)] border border-[var(--charcoal-600)] rounded-full px-3 py-1.5 hover:border-[var(--gold-500)] hover:text-[var(--ivory)] transition-colors whitespace-nowrap">Kinky Twists</a>
+    <a href="#cat-cornrows" class="font-mono text-xs uppercase tracking-wider text-[var(--steel-300)] border border-[var(--charcoal-600)] rounded-full px-3 py-1.5 hover:border-[var(--gold-500)] hover:text-[var(--ivory)] transition-colors whitespace-nowrap">Cornrows</a>
+    <a href="#cat-consultations" class="font-mono text-xs uppercase tracking-wider text-[var(--steel-300)] border border-[var(--charcoal-600)] rounded-full px-3 py-1.5 hover:border-[var(--gold-500)] hover:text-[var(--ivory)] transition-colors whitespace-nowrap">Consultations</a>
+  </div>
 
-    <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-5"
-      data-name="Skin Fade" data-price="₦9,500"
-      data-detail="Clipper work down to the skin with a razor-clean blend, no visible lines between lengths. Tell us low, mid, or high fade when you book, or we'll recommend one based on your hair. About 40 minutes.">
-      <div>
-        <p class="font-display uppercase tracking-wide">Skin Fade</p>
-        <p class="text-sm text-[var(--steel-300)] mt-1">A clean, blended taper down to the skin — low, mid, or high, your call.</p>
-      </div>
-      <span class="font-mono text-[var(--gold-300)] whitespace-nowrap">₦9,500</span>
-    </button>
+  <div id="cat-wash" class="reveal mb-14 scroll-mt-24">
+    <h3 class="font-display text-2xl uppercase text-[var(--gold-400)] mb-1">Wash</h3>
+    <div class="forge-line mb-2" style="height:1px;"></div>
+    <div class="flex flex-col">
+      <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-4"
+        data-name="Kids &amp; Teens" data-price="£10"
+        data-detail="Part of our Wash menu. Tap below to confirm your preferred day and time.">
+        <p class="font-display uppercase tracking-wide text-sm sm:text-base">Kids &amp; Teens</p>
+        <span class="font-mono text-[var(--gold-300)] whitespace-nowrap text-sm sm:text-base">£10</span>
+      </button>
+      <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-4"
+        data-name="Wash, Conditioning &amp; Blow Dry (Adult)" data-price="£25"
+        data-detail="Part of our Wash menu. Tap below to confirm your preferred day and time.">
+        <p class="font-display uppercase tracking-wide text-sm sm:text-base">Wash, Conditioning &amp; Blow Dry (Adult)</p>
+        <span class="font-mono text-[var(--gold-300)] whitespace-nowrap text-sm sm:text-base">£25</span>
+      </button>
+      <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-4"
+        data-name="Wash Locs (Adult)" data-price="£15"
+        data-detail="Part of our Wash menu. Tap below to confirm your preferred day and time.">
+        <p class="font-display uppercase tracking-wide text-sm sm:text-base">Wash Locs (Adult)</p>
+        <span class="font-mono text-[var(--gold-300)] whitespace-nowrap text-sm sm:text-base">£15</span>
+      </button>
+      <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-4"
+        data-name="Wash, Conditioning &amp; Blow Dry (Kids &amp; Teens)" data-price="£20"
+        data-detail="Part of our Wash menu. Tap below to confirm your preferred day and time.">
+        <p class="font-display uppercase tracking-wide text-sm sm:text-base">Wash, Conditioning &amp; Blow Dry (Kids &amp; Teens)</p>
+        <span class="font-mono text-[var(--gold-300)] whitespace-nowrap text-sm sm:text-base">£20</span>
+      </button>
+    </div>
+  </div>
 
-    <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-5"
-      data-name="Beard Sculpt" data-price="₦5,000"
-      data-detail="Beard trimmed and shaped to your jawline, sharp lines on the cheek and neck, finished with beard oil to soften and set it. About 20 minutes. Works well paired with any cut.">
-      <div>
-        <p class="font-display uppercase tracking-wide">Beard Sculpt</p>
-        <p class="text-sm text-[var(--steel-300)] mt-1">Shape-up and line definition, finished with beard oil.</p>
-      </div>
-      <span class="font-mono text-[var(--gold-300)] whitespace-nowrap">₦5,000</span>
-    </button>
+  <div id="cat-haircut" class="reveal mb-14 scroll-mt-24">
+    <h3 class="font-display text-2xl uppercase text-[var(--gold-400)] mb-1">Haircut</h3>
+    <div class="forge-line mb-2" style="height:1px;"></div>
+    <div class="flex flex-col">
+      <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-4"
+        data-name="Shape Up (Kids)" data-price="£5"
+        data-detail="Part of our Haircut menu. Tap below to confirm your preferred day and time.">
+        <p class="font-display uppercase tracking-wide text-sm sm:text-base">Shape Up (Kids)</p>
+        <span class="font-mono text-[var(--gold-300)] whitespace-nowrap text-sm sm:text-base">£5</span>
+      </button>
+      <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-4"
+        data-name="Shape Up (Teens 11–17)" data-price="£5"
+        data-detail="Part of our Haircut menu. Tap below to confirm your preferred day and time.">
+        <p class="font-display uppercase tracking-wide text-sm sm:text-base">Shape Up (Teens 11–17)</p>
+        <span class="font-mono text-[var(--gold-300)] whitespace-nowrap text-sm sm:text-base">£5</span>
+      </button>
+      <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-4"
+        data-name="Shape Up (Adult)" data-price="£10"
+        data-detail="Part of our Haircut menu. Tap below to confirm your preferred day and time.">
+        <p class="font-display uppercase tracking-wide text-sm sm:text-base">Shape Up (Adult)</p>
+        <span class="font-mono text-[var(--gold-300)] whitespace-nowrap text-sm sm:text-base">£10</span>
+      </button>
+      <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-4"
+        data-name="Haircut (Adult Men)" data-price="£20"
+        data-detail="Part of our Haircut menu. Tap below to confirm your preferred day and time.">
+        <p class="font-display uppercase tracking-wide text-sm sm:text-base">Haircut (Adult Men)</p>
+        <span class="font-mono text-[var(--gold-300)] whitespace-nowrap text-sm sm:text-base">£20</span>
+      </button>
+      <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-4"
+        data-name="Haircut (Ladies)" data-price="£15"
+        data-detail="Part of our Haircut menu. Tap below to confirm your preferred day and time.">
+        <p class="font-display uppercase tracking-wide text-sm sm:text-base">Haircut (Ladies)</p>
+        <span class="font-mono text-[var(--gold-300)] whitespace-nowrap text-sm sm:text-base">£15</span>
+      </button>
+    </div>
+  </div>
 
-    <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-5"
-      data-name="Hot Towel Shave" data-price="₦6,500"
-      data-detail="A traditional straight-razor shave. We start with a hot towel wrap to soften the skin and open the pores, then shave with the grain for a close, irritation-free finish. About 30 minutes.">
-      <div>
-        <p class="font-display uppercase tracking-wide">Hot Towel Shave</p>
-        <p class="text-sm text-[var(--steel-300)] mt-1">Straight-razor shave with a hot towel wrap to open the pores first.</p>
-      </div>
-      <span class="font-mono text-[var(--gold-300)] whitespace-nowrap">₦6,500</span>
-    </button>
+  <div id="cat-locs-adult" class="reveal mb-14 scroll-mt-24">
+    <h3 class="font-display text-2xl uppercase text-[var(--gold-400)] mb-1">Locs — Adult</h3>
+    <div class="forge-line mb-2" style="height:1px;"></div>
+    <div class="flex flex-col">
+      <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-4"
+        data-name="Styling" data-price="£15"
+        data-detail="Part of our Locs — Adult menu. Tap below to confirm your preferred day and time.">
+        <p class="font-display uppercase tracking-wide text-sm sm:text-base">Styling</p>
+        <span class="font-mono text-[var(--gold-300)] whitespace-nowrap text-sm sm:text-base">£15</span>
+      </button>
+      <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-4"
+        data-name="Interlock/Retwist (Half Head)" data-price="£45"
+        data-detail="Part of our Locs — Adult menu. Tap below to confirm your preferred day and time.">
+        <p class="font-display uppercase tracking-wide text-sm sm:text-base">Interlock/Retwist (Half Head)</p>
+        <span class="font-mono text-[var(--gold-300)] whitespace-nowrap text-sm sm:text-base">£45</span>
+      </button>
+      <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-4"
+        data-name="Interlock/Retwist (Full Head)" data-price="£55"
+        data-detail="Part of our Locs — Adult menu. Tap below to confirm your preferred day and time.">
+        <p class="font-display uppercase tracking-wide text-sm sm:text-base">Interlock/Retwist (Full Head)</p>
+        <span class="font-mono text-[var(--gold-300)] whitespace-nowrap text-sm sm:text-base">£55</span>
+      </button>
+      <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-4"
+        data-name="Retwist/Interlock + Styling (Half Head)" data-price="£55"
+        data-detail="Part of our Locs — Adult menu. Tap below to confirm your preferred day and time.">
+        <p class="font-display uppercase tracking-wide text-sm sm:text-base">Retwist/Interlock + Styling (Half Head)</p>
+        <span class="font-mono text-[var(--gold-300)] whitespace-nowrap text-sm sm:text-base">£55</span>
+      </button>
+      <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-4"
+        data-name="Retwist/Interlock + Styling (Full Head)" data-price="£65"
+        data-detail="Part of our Locs — Adult menu. Tap below to confirm your preferred day and time.">
+        <p class="font-display uppercase tracking-wide text-sm sm:text-base">Retwist/Interlock + Styling (Full Head)</p>
+        <span class="font-mono text-[var(--gold-300)] whitespace-nowrap text-sm sm:text-base">£65</span>
+      </button>
+      <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-4"
+        data-name="Starter Locs (Half Head)" data-price="£50"
+        data-detail="Part of our Locs — Adult menu. Tap below to confirm your preferred day and time.">
+        <p class="font-display uppercase tracking-wide text-sm sm:text-base">Starter Locs (Half Head)</p>
+        <span class="font-mono text-[var(--gold-300)] whitespace-nowrap text-sm sm:text-base">£50</span>
+      </button>
+      <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-4"
+        data-name="Starter Locs (Full Head)" data-price="£60"
+        data-detail="Part of our Locs — Adult menu. Tap below to confirm your preferred day and time.">
+        <p class="font-display uppercase tracking-wide text-sm sm:text-base">Starter Locs (Full Head)</p>
+        <span class="font-mono text-[var(--gold-300)] whitespace-nowrap text-sm sm:text-base">£60</span>
+      </button>
+      <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-4"
+        data-name="Locs Extensions / Extensive Locs Repairs" data-price="£20 (1st hr), £10/hr after — est. 2hrs"
+        data-detail="Part of our Locs — Adult menu. Tap below to confirm your preferred day and time.">
+        <p class="font-display uppercase tracking-wide text-sm sm:text-base">Locs Extensions / Extensive Locs Repairs</p>
+        <span class="font-mono text-[var(--gold-300)] whitespace-nowrap text-sm sm:text-base">£20 (1st hr), £10/hr after — est. 2hrs</span>
+      </button>
+      <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-4"
+        data-name="Starter Microlocs" data-price="£20 (1st hr), £10/hr after"
+        data-detail="Part of our Locs — Adult menu. Tap below to confirm your preferred day and time.">
+        <p class="font-display uppercase tracking-wide text-sm sm:text-base">Starter Microlocs</p>
+        <span class="font-mono text-[var(--gold-300)] whitespace-nowrap text-sm sm:text-base">£20 (1st hr), £10/hr after</span>
+      </button>
+      <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-4"
+        data-name="Microlocs Retie (2½ hrs)" data-price="£50"
+        data-detail="Part of our Locs — Adult menu. Tap below to confirm your preferred day and time.">
+        <p class="font-display uppercase tracking-wide text-sm sm:text-base">Microlocs Retie (2½ hrs)</p>
+        <span class="font-mono text-[var(--gold-300)] whitespace-nowrap text-sm sm:text-base">£50</span>
+      </button>
+      <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-4"
+        data-name="Microlocs Retie (3½ hrs)" data-price="£65"
+        data-detail="Part of our Locs — Adult menu. Tap below to confirm your preferred day and time.">
+        <p class="font-display uppercase tracking-wide text-sm sm:text-base">Microlocs Retie (3½ hrs)</p>
+        <span class="font-mono text-[var(--gold-300)] whitespace-nowrap text-sm sm:text-base">£65</span>
+      </button>
+      <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-4"
+        data-name="Microlocs Retie (4 hrs)" data-price="£80"
+        data-detail="Part of our Locs — Adult menu. Tap below to confirm your preferred day and time.">
+        <p class="font-display uppercase tracking-wide text-sm sm:text-base">Microlocs Retie (4 hrs)</p>
+        <span class="font-mono text-[var(--gold-300)] whitespace-nowrap text-sm sm:text-base">£80</span>
+      </button>
+    </div>
+  </div>
 
-    <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-5"
-      data-name="Grey Blending" data-price="₦10,000"
-      data-detail="A gradual color blend that softens grey rather than covering it outright — keeps a natural look instead of a flat, obviously-dyed result. Best maintained every 3–4 weeks. About 45 minutes.">
-      <div>
-        <p class="font-display uppercase tracking-wide">Grey Blending</p>
-        <p class="text-sm text-[var(--steel-300)] mt-1">Softens grey without a flat, dyed look — blended in gradually.</p>
-      </div>
-      <span class="font-mono text-[var(--gold-300)] whitespace-nowrap">₦10,000</span>
-    </button>
+  <div id="cat-locs-teens-13-17" class="reveal mb-14 scroll-mt-24">
+    <h3 class="font-display text-2xl uppercase text-[var(--gold-400)] mb-1">Locs — Teens (13–17)</h3>
+    <div class="forge-line mb-2" style="height:1px;"></div>
+    <div class="flex flex-col">
+      <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-4"
+        data-name="Styling" data-price="£10"
+        data-detail="Part of our Locs — Teens (13–17) menu. Tap below to confirm your preferred day and time.">
+        <p class="font-display uppercase tracking-wide text-sm sm:text-base">Styling</p>
+        <span class="font-mono text-[var(--gold-300)] whitespace-nowrap text-sm sm:text-base">£10</span>
+      </button>
+      <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-4"
+        data-name="Interlock/Retwist (Half Head)" data-price="£40"
+        data-detail="Part of our Locs — Teens (13–17) menu. Tap below to confirm your preferred day and time.">
+        <p class="font-display uppercase tracking-wide text-sm sm:text-base">Interlock/Retwist (Half Head)</p>
+        <span class="font-mono text-[var(--gold-300)] whitespace-nowrap text-sm sm:text-base">£40</span>
+      </button>
+      <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-4"
+        data-name="Interlock/Retwist (Full Head)" data-price="£50"
+        data-detail="Part of our Locs — Teens (13–17) menu. Tap below to confirm your preferred day and time.">
+        <p class="font-display uppercase tracking-wide text-sm sm:text-base">Interlock/Retwist (Full Head)</p>
+        <span class="font-mono text-[var(--gold-300)] whitespace-nowrap text-sm sm:text-base">£50</span>
+      </button>
+      <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-4"
+        data-name="Retwist/Interlock + Styling (Half Head)" data-price="£50"
+        data-detail="Part of our Locs — Teens (13–17) menu. Tap below to confirm your preferred day and time.">
+        <p class="font-display uppercase tracking-wide text-sm sm:text-base">Retwist/Interlock + Styling (Half Head)</p>
+        <span class="font-mono text-[var(--gold-300)] whitespace-nowrap text-sm sm:text-base">£50</span>
+      </button>
+      <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-4"
+        data-name="Retwist/Interlock + Styling (Full Head)" data-price="£60"
+        data-detail="Part of our Locs — Teens (13–17) menu. Tap below to confirm your preferred day and time.">
+        <p class="font-display uppercase tracking-wide text-sm sm:text-base">Retwist/Interlock + Styling (Full Head)</p>
+        <span class="font-mono text-[var(--gold-300)] whitespace-nowrap text-sm sm:text-base">£60</span>
+      </button>
+      <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-4"
+        data-name="Starter Locs (Half Head)" data-price="£45"
+        data-detail="Part of our Locs — Teens (13–17) menu. Tap below to confirm your preferred day and time.">
+        <p class="font-display uppercase tracking-wide text-sm sm:text-base">Starter Locs (Half Head)</p>
+        <span class="font-mono text-[var(--gold-300)] whitespace-nowrap text-sm sm:text-base">£45</span>
+      </button>
+      <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-4"
+        data-name="Starter Locs (Full Head)" data-price="£55"
+        data-detail="Part of our Locs — Teens (13–17) menu. Tap below to confirm your preferred day and time.">
+        <p class="font-display uppercase tracking-wide text-sm sm:text-base">Starter Locs (Full Head)</p>
+        <span class="font-mono text-[var(--gold-300)] whitespace-nowrap text-sm sm:text-base">£55</span>
+      </button>
+    </div>
+  </div>
 
-    <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-5"
-      data-name="Kids Cut (under 12)" data-price="₦5,500"
-      data-detail="A full cut for kids under 12, same precision as an adult cut but at a calmer, more patient pace. Parents are welcome to stay in the chair area. About 20–25 minutes.">
-      <div>
-        <p class="font-display uppercase tracking-wide">Kids Cut (under 12)</p>
-        <p class="text-sm text-[var(--steel-300)] mt-1">Same precision, a calmer pace — for our younger clients.</p>
-      </div>
-      <span class="font-mono text-[var(--gold-300)] whitespace-nowrap">₦5,500</span>
-    </button>
+  <div id="cat-locs-kids" class="reveal mb-14 scroll-mt-24">
+    <h3 class="font-display text-2xl uppercase text-[var(--gold-400)] mb-1">Locs — Kids</h3>
+    <div class="forge-line mb-2" style="height:1px;"></div>
+    <div class="flex flex-col">
+      <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-4"
+        data-name="Styling" data-price="£10"
+        data-detail="Part of our Locs — Kids menu. Tap below to confirm your preferred day and time.">
+        <p class="font-display uppercase tracking-wide text-sm sm:text-base">Styling</p>
+        <span class="font-mono text-[var(--gold-300)] whitespace-nowrap text-sm sm:text-base">£10</span>
+      </button>
+      <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-4"
+        data-name="Interlock/Retwist (Half Head)" data-price="£35"
+        data-detail="Part of our Locs — Kids menu. Tap below to confirm your preferred day and time.">
+        <p class="font-display uppercase tracking-wide text-sm sm:text-base">Interlock/Retwist (Half Head)</p>
+        <span class="font-mono text-[var(--gold-300)] whitespace-nowrap text-sm sm:text-base">£35</span>
+      </button>
+      <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-4"
+        data-name="Interlock/Retwist (Full Head)" data-price="£40"
+        data-detail="Part of our Locs — Kids menu. Tap below to confirm your preferred day and time.">
+        <p class="font-display uppercase tracking-wide text-sm sm:text-base">Interlock/Retwist (Full Head)</p>
+        <span class="font-mono text-[var(--gold-300)] whitespace-nowrap text-sm sm:text-base">£40</span>
+      </button>
+      <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-4"
+        data-name="Retwist/Interlock + Styling (Half Head)" data-price="£45"
+        data-detail="Part of our Locs — Kids menu. Tap below to confirm your preferred day and time.">
+        <p class="font-display uppercase tracking-wide text-sm sm:text-base">Retwist/Interlock + Styling (Half Head)</p>
+        <span class="font-mono text-[var(--gold-300)] whitespace-nowrap text-sm sm:text-base">£45</span>
+      </button>
+      <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-4"
+        data-name="Retwist/Interlock + Styling (Full Head)" data-price="£45"
+        data-detail="Part of our Locs — Kids menu. Tap below to confirm your preferred day and time.">
+        <p class="font-display uppercase tracking-wide text-sm sm:text-base">Retwist/Interlock + Styling (Full Head)</p>
+        <span class="font-mono text-[var(--gold-300)] whitespace-nowrap text-sm sm:text-base">£45</span>
+      </button>
+      <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-4"
+        data-name="Starter Locs (Half Head)" data-price="£35"
+        data-detail="Part of our Locs — Kids menu. Tap below to confirm your preferred day and time.">
+        <p class="font-display uppercase tracking-wide text-sm sm:text-base">Starter Locs (Half Head)</p>
+        <span class="font-mono text-[var(--gold-300)] whitespace-nowrap text-sm sm:text-base">£35</span>
+      </button>
+      <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-4"
+        data-name="Starter Locs (Full Head)" data-price="£45"
+        data-detail="Part of our Locs — Kids menu. Tap below to confirm your preferred day and time.">
+        <p class="font-display uppercase tracking-wide text-sm sm:text-base">Starter Locs (Full Head)</p>
+        <span class="font-mono text-[var(--gold-300)] whitespace-nowrap text-sm sm:text-base">£45</span>
+      </button>
+    </div>
+  </div>
 
-    <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-5"
-      data-name="Cut + Beard Combo" data-price="₦12,000"
-      data-detail="Our Signature Cut and Beard Sculpt done back to back in one sitting, at a lower combined rate than booking them separately. About 50 minutes total.">
-      <div>
-        <p class="font-display uppercase tracking-wide">Cut + Beard Combo</p>
-        <p class="text-sm text-[var(--steel-300)] mt-1">Signature cut and beard sculpt together, at a bundled rate.</p>
-      </div>
-      <span class="font-mono text-[var(--gold-300)] whitespace-nowrap">₦12,000</span>
-    </button>
+  <div id="cat-professional-removals" class="reveal mb-14 scroll-mt-24">
+    <h3 class="font-display text-2xl uppercase text-[var(--gold-400)] mb-1">Professional Removals</h3>
+    <div class="forge-line mb-2" style="height:1px;"></div>
+    <div class="flex flex-col">
+      <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-4"
+        data-name="Cornrow Removal" data-price="£30"
+        data-detail="Part of our Professional Removals menu. Tap below to confirm your preferred day and time.">
+        <p class="font-display uppercase tracking-wide text-sm sm:text-base">Cornrow Removal</p>
+        <span class="font-mono text-[var(--gold-300)] whitespace-nowrap text-sm sm:text-base">£30</span>
+      </button>
+      <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-4"
+        data-name="Faux Locs Removal" data-price="£20"
+        data-detail="Part of our Professional Removals menu. Tap below to confirm your preferred day and time.">
+        <p class="font-display uppercase tracking-wide text-sm sm:text-base">Faux Locs Removal</p>
+        <span class="font-mono text-[var(--gold-300)] whitespace-nowrap text-sm sm:text-base">£20</span>
+      </button>
+      <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-4"
+        data-name="Combing Out of Locs" data-price="£20/hr"
+        data-detail="Part of our Professional Removals menu. Tap below to confirm your preferred day and time.">
+        <p class="font-display uppercase tracking-wide text-sm sm:text-base">Combing Out of Locs</p>
+        <span class="font-mono text-[var(--gold-300)] whitespace-nowrap text-sm sm:text-base">£20/hr</span>
+      </button>
+    </div>
+  </div>
 
-    <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-5"
-      data-name="The Full Forge" data-price="₦16,000"
-      data-detail="The full experience: signature cut, beard sculpt, hot towel straight-razor shave, and a wash to finish. Built for when you want to properly reset, not just touch up. About 75–90 minutes.">
-      <div>
-        <p class="font-display uppercase tracking-wide">The Full Forge</p>
-        <p class="text-sm text-[var(--steel-300)] mt-1">Cut, beard, hot towel shave and wash — the complete session.</p>
-      </div>
-      <span class="font-mono text-[var(--gold-300)] whitespace-nowrap">₦16,000</span>
-    </button>
+  <div id="cat-kinky-twists" class="reveal mb-14 scroll-mt-24">
+    <h3 class="font-display text-2xl uppercase text-[var(--gold-400)] mb-1">Kinky Twists</h3>
+    <div class="forge-line mb-2" style="height:1px;"></div>
+    <div class="flex flex-col">
+      <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-4"
+        data-name="Kinky Twists" data-price="£60"
+        data-detail="Part of our Kinky Twists menu. Tap below to confirm your preferred day and time.">
+        <p class="font-display uppercase tracking-wide text-sm sm:text-base">Kinky Twists</p>
+        <span class="font-mono text-[var(--gold-300)] whitespace-nowrap text-sm sm:text-base">£60</span>
+      </button>
+    </div>
+  </div>
+
+  <div id="cat-cornrows" class="reveal mb-14 scroll-mt-24">
+    <h3 class="font-display text-2xl uppercase text-[var(--gold-400)] mb-1">Cornrows</h3>
+    <div class="forge-line mb-2" style="height:1px;"></div>
+    <div class="flex flex-col">
+      <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-4"
+        data-name="Basic (Half Head)" data-price="£30"
+        data-detail="Part of our Cornrows menu. Tap below to confirm your preferred day and time.">
+        <p class="font-display uppercase tracking-wide text-sm sm:text-base">Basic (Half Head)</p>
+        <span class="font-mono text-[var(--gold-300)] whitespace-nowrap text-sm sm:text-base">£30</span>
+      </button>
+      <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-4"
+        data-name="Basic (Full Head)" data-price="£40"
+        data-detail="Part of our Cornrows menu. Tap below to confirm your preferred day and time.">
+        <p class="font-display uppercase tracking-wide text-sm sm:text-base">Basic (Full Head)</p>
+        <span class="font-mono text-[var(--gold-300)] whitespace-nowrap text-sm sm:text-base">£40</span>
+      </button>
+      <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-4"
+        data-name="Stitch Pattern (Half Head)" data-price="£50"
+        data-detail="Part of our Cornrows menu. Tap below to confirm your preferred day and time.">
+        <p class="font-display uppercase tracking-wide text-sm sm:text-base">Stitch Pattern (Half Head)</p>
+        <span class="font-mono text-[var(--gold-300)] whitespace-nowrap text-sm sm:text-base">£50</span>
+      </button>
+      <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-4"
+        data-name="Stitch Pattern (Full Head)" data-price="£60"
+        data-detail="Part of our Cornrows menu. Tap below to confirm your preferred day and time.">
+        <p class="font-display uppercase tracking-wide text-sm sm:text-base">Stitch Pattern (Full Head)</p>
+        <span class="font-mono text-[var(--gold-300)] whitespace-nowrap text-sm sm:text-base">£60</span>
+      </button>
+    </div>
+  </div>
+
+  <div id="cat-consultations" class="reveal mb-14 scroll-mt-24">
+    <h3 class="font-display text-2xl uppercase text-[var(--gold-400)] mb-1">Consultations</h3>
+    <div class="forge-line mb-2" style="height:1px;"></div>
+    <div class="flex flex-col">
+      <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-4"
+        data-name="In-Person" data-price="£15"
+        data-detail="Part of our Consultations menu. Tap below to confirm your preferred day and time.">
+        <p class="font-display uppercase tracking-wide text-sm sm:text-base">In-Person</p>
+        <span class="font-mono text-[var(--gold-300)] whitespace-nowrap text-sm sm:text-base">£15</span>
+      </button>
+      <button type="button" class="service-row w-full text-left price-row flex justify-between gap-6 py-4"
+        data-name="Video Consultation" data-price="£10"
+        data-detail="Part of our Consultations menu. Tap below to confirm your preferred day and time.">
+        <p class="font-display uppercase tracking-wide text-sm sm:text-base">Video Consultation</p>
+        <span class="font-mono text-[var(--gold-300)] whitespace-nowrap text-sm sm:text-base">£10</span>
+      </button>
+    </div>
   </div>
 </section>
 
@@ -355,7 +618,7 @@
 <!-- FOOTER -->
 <footer class="border-t border-[var(--charcoal-700)] px-5 sm:px-8 py-10">
   <div class="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-6">
-    <p class="font-mono text-xs text-[var(--steel-400)] uppercase tracking-wider">© 2026 Hair Klinics.  Mansfield Road, Nottingham</p>
+    <p class="font-mono text-xs text-[var(--steel-400)] uppercase tracking-wider">© 2026 Hair Klinics. Mansfield Road, Nottingham</p>
 
     <div class="flex items-center gap-5">
       <a href="https://instagram.com/hairklinics" target="_blank" rel="noopener" aria-label="Instagram" class="text-[var(--steel-400)] hover:text-[var(--gold-400)] transition-colors">
